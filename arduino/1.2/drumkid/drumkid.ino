@@ -296,6 +296,9 @@ void updateControl(){
           // MIDI settings
           menuState = 4;
           specialLedDisplay(B00001110,true);
+        } else if (buttonGroup == B00011010) {
+          // Manual tap drumming mode
+          menuState = 6;
         }
         buttonGroup = 0;
       }
@@ -383,6 +386,23 @@ void updateControl(){
       } else if(buttonsPressed == B00010000) {
         // play test MIDI note
         triggerNote(activeMidiSettingsNum,255);
+      }
+    } else if (menuState==6) {
+      // Manual tap drumming mode
+      if(buttonsPressed == 0) {
+        if(buttonGroup == B00000001) {
+          triggerNote(0, 255);
+        } else if(buttonGroup == B00000010) {
+          triggerNote(1, 255);
+        } else if(buttonGroup == B00000100) {
+          triggerNote(2, 255);
+        } else if(buttonGroup == B00001000) {
+          triggerNote(3, 255);
+        } else if(buttonGroup == B00010000) {
+          triggerNote(4, 255);
+        } else if(buttonGroup == B00100000) {
+          menuState = 0; // tap tempo button exits to main menu state
+        }
       }
     }
   }
